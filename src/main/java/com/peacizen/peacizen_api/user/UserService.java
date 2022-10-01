@@ -4,13 +4,12 @@ import com.peacizen.peacizen_api.domain.user.User;
 import com.peacizen.peacizen_api.domain.user.UserRepository;
 import com.peacizen.peacizen_api.user.dto.RegisterRequest;
 import com.peacizen.peacizen_api.user.exception.UserAlreadyExist;
+import com.peacizen.peacizen_api.util.MessageUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +18,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final MessageSourceAccessor messageSourceAccessor;
 
     public User register(RegisterRequest registerRequest){
 
         if(userRepository.findByEmail(registerRequest.getEmail()).isPresent()){
-            throw new UserAlreadyExist(messageSourceAccessor.getMessage("emailDuplicate", Locale.KOREA));
+            throw new UserAlreadyExist(MessageUtil.getMessage("EMAIL_DUPLICATED"));
         }
 
         return userRepository.save(User.builder()
