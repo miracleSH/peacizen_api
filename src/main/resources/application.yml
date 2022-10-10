@@ -17,3 +17,6 @@ spring:
           hibernate:
             SQL: DEBUG
             type: trace
+
+jwt:
+  secret: Afnas65Sf6sS235dsklAN544fnswhkUrnfkllWQhjlskNklsl5G7w7F5545S465S
